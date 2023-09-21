@@ -74,6 +74,44 @@ router.get('/:userId', async (req, res) => {
 });
 */
 
+/*
+    // POST add friend to user
+router.post('/:userId/friends/:friendId', async (req, res) => {
+    try {
+        const userData = await User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $addToSet: { friends: req.params.friendId } },
+            { new: true } // return updated user 
+        );
+        if (!userData) {
+            res.status(404).json('No user found with this id!');
+        }
+        res.status(200).json(userData);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json('Unexpected error!');
+    }
+});
+
+// DELETE to remove friend from user
+router.delete('/:userId/friends/:friendId', async (req, res) => {
+    try {
+        const userData = await User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $pull: { friends: req.params.friendId } },
+            { new: true }
+        );
+        if (!userData) {
+            res.status(404).json('No user found with this id!');
+        }
+        res.status(200).json(userData);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json('Unexpected error!');
+    }
+})
+*/
+
 // from models/User.js
 // const handleError = (err) => console.log(err);
 /*

@@ -65,4 +65,39 @@ router.route('/:userId')
         }
     });
 
+// Combine POST and DELETE for friend
+router.route('/:userId/friends/:friendId')
+    .post(async (req, res) => {
+        try {
+            const userData = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $addToSet: { friends: req.params.friendId } },
+                { new: true } // return updated user 
+            );
+            if (!userData) {
+                res.status(404).json('No user found with this id!');
+            }
+            res.status(200).json(userData);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json('Unexpected error!');
+        }
+    })
+    .delete(async (req, res) => {
+        try {
+            const userData = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $pull: { friends: req.params.friendId } },
+                { new: true }
+            );
+            if (!userData) {
+                res.status(404).json('No user found with this id!');
+            }
+            res.status(200).json(userData);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json('Unexpected error!');
+        }
+    });
+
 module.exports = router;

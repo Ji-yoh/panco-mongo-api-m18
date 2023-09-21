@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const User = require('../models/User');
+const { User, Thoughts } = require('../../models');
 
 // combine GET and POST for single user
 router.route('/')

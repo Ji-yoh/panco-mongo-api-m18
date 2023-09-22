@@ -78,5 +78,39 @@ router.route('/:thoughtId')
     });
 
 // POST route for new reaction
+router.post('/:thoughtId/reactions', async (req, res) => {
+    try {
+        const thoughtsData = await Thoughts.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $addToSet: { reactions: req.body } },
+            { new: true }
+        )
+        if (!thoughtsData) {
+            res.status(404).json('No thought found with this id!');
+        }
+        res.status(200).json(thoughtsData);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json('Unexpected error!');
+    }
+});
+
+// DELETE route for reaction
+router.delete('/:thoughtId/reactions/:reactionId', async(req, res) => {
+    try {
+        const thoughtsData = await Thoughts.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $pull: { reactions: { reactionId: req.body.reactionId } } },
+            { new: true}
+        )
+        if (!thoughtsData) {
+            res.status(404).json('No thought found with this id!');
+        }
+        res.status(200).json('Reaction deleted!');
+    } catch (err) {
+        console.error(err);
+        res.status(500).json('Unexpected error!')
+    }
+});
 
 module.exports = router;

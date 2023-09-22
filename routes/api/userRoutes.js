@@ -58,7 +58,7 @@ router.route('/:userId')
             }
             await User.deleteMany({ _id: { $in: userData.friends } });
             await User.deleteMany({ _id: { $in: userData.thoughts } });
-            res.status(200).json(userData);
+            res.status(200).json('User deleted!');
         } catch (err) {
             console.error(err);
             res.status(500).json('Unexpected error!');

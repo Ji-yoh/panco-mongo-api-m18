@@ -100,7 +100,7 @@ router.delete('/:thoughtId/reactions/:reactionId', async(req, res) => {
     try {
         const thoughtsData = await Thoughts.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $pull: { reactions: { reactionId: req.body.reactionId } } },
+            { $pull: { reactions: { reactionId: req.params.reactionId } } },
             { new: true}
         )
         if (!thoughtsData) {

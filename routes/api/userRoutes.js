@@ -93,7 +93,7 @@ router.route('/:userId/friends/:friendId')
             if (!userData) {
                 res.status(404).json('No user found with this id!');
             }
-            res.status(200).json(userData);
+            res.status(200).json('Friend deleted!');
         } catch (err) {
             console.error(err);
             res.status(500).json('Unexpected error!');
